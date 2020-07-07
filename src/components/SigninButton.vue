@@ -35,6 +35,7 @@ export default {
 
     &:hover {
       color: white;
+      cursor: pointer;
     }
 
     &:hover::after {

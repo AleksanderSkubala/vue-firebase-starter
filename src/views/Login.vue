@@ -8,6 +8,7 @@
 <script>
 import { auth, googleProvider } from '@/initFirebase';
 import SigninButton from '@/components/SigninButton.vue';
+import store from '@/store';
 
 export default {
   name: 'Login',
@@ -23,7 +24,11 @@ export default {
   methods: {
     login() {
       auth.signInWithPopup(googleProvider)
-        .then()
+        .then((result) => {
+          store.dispatch("fetchUser", result.user);
+          console.log(this.$store.state.user);
+          this.$router.push('/');
+        })
         .catch((err) => alert(`Something went wrong: ${err.message}`));
     },
   },
