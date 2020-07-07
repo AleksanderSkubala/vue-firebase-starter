@@ -15,18 +15,11 @@ export default {
   components: {
     SigninButton,
   },
-  data() {
-    return {
-      form: {},
-      error: null,
-    };
-  },
   methods: {
     login() {
       auth.signInWithPopup(googleProvider)
         .then((result) => {
           store.dispatch("fetchUser", result.user);
-          console.log(this.$store.state.user);
           this.$router.push('/');
         })
         .catch((err) => alert(`Something went wrong: ${err.message}`));
@@ -34,7 +27,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-
-</style>
