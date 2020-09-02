@@ -1,4 +1,7 @@
 import firebase from 'firebase';
+import 'firebase/auth';
+import router from './router';
+import store from './store';
 
 const configOptions = {
   apiKey: "AIzaSyBe23vGrWbbtK6cWQflEewoDvTBtKWQEBM",
@@ -12,6 +15,15 @@ const configOptions = {
 };
 
 firebase.initializeApp(configOptions);
+
+firebase.auth().onAuthStateChanged((user) => {
+  store.dispatch("fetchUser", user);
+  if (router.currentRoute.meta.redirect && !user) {
+    router.push('/login');
+  } else if (router.currentRoute.meta.login && user) {
+    router.back();
+  }
+});
 
 export const auth = firebase.auth();
 export const googleProvider = new firebase.auth.GoogleAuthProvider();
