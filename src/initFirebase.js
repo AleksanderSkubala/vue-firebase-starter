@@ -1,5 +1,6 @@
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import 'firebase/auth';
+import 'firebase/firestore';
 import router from './router';
 import store from './store';
 
@@ -16,14 +17,26 @@ const configOptions = {
 
 firebase.initializeApp(configOptions);
 
+export const auth = firebase.auth();
+
 firebase.auth().onAuthStateChanged((user) => {
-  store.dispatch("fetchUser", user);
-  if (router.currentRoute.meta.redirect && !user) {
+  store.dispatch('fetchUser', user);
+  if (router.currentRoute.meta.requiresAuth && !user) {
     router.push('/login');
   } else if (router.currentRoute.meta.login && user) {
-    router.back();
+    router.push('/about');
   }
 });
 
-export const auth = firebase.auth();
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiresAuth && !auth.currentUser) {
+    router.push('/login')
+      .catch(() => {});
+  } else if (to.meta.login && auth.currentUser) {
+    router.push(from.path)
+      .catch(() => {});
+  } else next();
+});
+
 export const googleProvider = new firebase.auth.GoogleAuthProvider();
+export const db = firebase.firestore();

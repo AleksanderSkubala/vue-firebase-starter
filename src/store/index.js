@@ -1,34 +1,25 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import { vuexfireMutations } from 'vuexfire';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    user: {
-      loggedIn: false,
-      data: null,
-    },
+    user: null,
   },
   mutations: {
-    setLoggedState(state, value) {
-      state.user.loggedIn = value;
-    },
     setUser(state, data) {
-      state.user.data = data;
+      state.user = data;
     },
+    ...vuexfireMutations,
   },
   actions: {
     fetchUser({ commit }, user) {
-      commit("setLoggedState", user !== null);
-      if (user) {
-        commit("setUser", {
-          displayName: user.displayName,
-          email: user.email,
-        });
-      } else {
-        commit("setUser", null);
-      }
+      if (user) commit('setUser', user);
+      else commit('setUser', user);
     },
+  },
+  modules: {
   },
 });
