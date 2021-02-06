@@ -1,24 +1,25 @@
-# vue-firebase-starter
+# Vue Firebase Starter
 
-## Project setup
-```
-npm install
-```
+Vue boilerplate that has already implemented connection with Firebase
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+# What you have to do
 
-### Compiles and minifies for production
-```
-npm run build
-```
+If you want to use this example as base in your project, you have to:
+  - pull this repo
+  - set package.json as you want to
+  - change firebase project settings in `configOptions ` (`initFirebase.js`)
+  - install modules
+  - run `npm run serve`
+  - HAVE FUN !!!
 
-### Lints and fixes files
-```
-npm run lint
-```
+That's all what you have to do!
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Author
+----
+Aleksander Skubała
+
+License
+----
+MIT
+
+**Free Software, Hell Yeah!**
